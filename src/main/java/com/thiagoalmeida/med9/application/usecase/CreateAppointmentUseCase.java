@@ -2,12 +2,14 @@ package com.thiagoalmeida.med9.application.usecase;
 
 import org.springframework.stereotype.Service;
 
+import com.thiagoalmeida.med9.application.dto.AppointmentNotification;
 import com.thiagoalmeida.med9.application.dto.CreateAppointmentRequest;
 import com.thiagoalmeida.med9.domain.model.Appointment;
 import com.thiagoalmeida.med9.domain.model.AppointmentStatus;
 import com.thiagoalmeida.med9.domain.model.User;
 import com.thiagoalmeida.med9.domain.repository.AppointmentRepository;
 import com.thiagoalmeida.med9.domain.repository.UserRepository;
+import com.thiagoalmeida.med9.infrastructure.service.NotificationService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,6 +19,7 @@ public class CreateAppointmentUseCase {
     
     private final AppointmentRepository appointmentRepository;
     private final UserRepository userRepository;
+    private final NotificationService notificationService;
     
     public Appointment execute(CreateAppointmentRequest request) {
         User doctor = userRepository.findById(request.getDoctorId())
@@ -40,6 +43,22 @@ public class CreateAppointmentUseCase {
         appointment.setNotes(request.getNotes());
         appointment.setStatus(AppointmentStatus.SCHEDULED);
         
-        return appointmentRepository.save(appointment);
+        Appointment savedAppointment = appointmentRepository.save(appointment);
+        
+        // Enviar notificação
+        AppointmentNotification notification = new AppointmentNotification(
+            savedAppointment.getId(),
+            patient.getId(),
+            patient.getName(),
+            patient.getEmail(),
+            doctor.getId(),
+            doctor.getName(),
+            savedAppointment.getAppointmentDateTime(),
+            savedAppointment.getNotes()
+        );
+        
+        notificationService.sendAppointmentNotification(notification);
+        
+        return savedAppointment;
     }
 } 
