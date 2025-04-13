@@ -1,7 +1,6 @@
 package com.thiagoalmeida.med9.application.dto;
 
-import com.thiagoalmeida.med9.domain.model.Role;
-
+import com.thiagoalmeida.med9.domain.enums.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

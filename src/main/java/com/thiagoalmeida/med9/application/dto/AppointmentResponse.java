@@ -2,12 +2,14 @@ package com.thiagoalmeida.med9.application.dto;
 
 import java.time.LocalDateTime;
 
-import com.thiagoalmeida.med9.domain.model.AppointmentStatus;
+import com.thiagoalmeida.med9.domain.enums.AppointmentStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class AppointmentResponse {
     private Long id;
