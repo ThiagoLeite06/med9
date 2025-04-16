@@ -1,17 +1,19 @@
 package com.thiagoalmeida.med9.infrastructure.security;
 
-import com.thiagoalmeida.med9.domain.entity.User;
-import com.thiagoalmeida.med9.domain.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.thiagoalmeida.med9.infrastructure.persistence.entities.UserJpaEntity;
+import com.thiagoalmeida.med9.infrastructure.persistence.repositories.UserJpaRepository;
+
+import lombok.RequiredArgsConstructor;
+
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsServiceImpl implements UserDetailsService {
-    private final UserRepository userRepository;
+    private final UserJpaRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -20,11 +22,11 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
-    private UserDetails createUserDetails(User user) {
+    private UserDetails createUserDetails(UserJpaEntity user) {
         return org.springframework.security.core.userdetails.User.builder()
-                .username(user.username())
-                .password(user.password())
-                .roles(user.roles().toArray(new String[0]))
+                .username(user.getUsername())
+                .password(user.getPassword())
+                .roles(user.getRole().name())
                 .build();
     }
 }
