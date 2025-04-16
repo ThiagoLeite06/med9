@@ -1,4 +1,4 @@
-package com.thiagoalmeida.med9.application.dto;
+package com.thiagoalmeida.med9.application.dto.user;
 
 import com.thiagoalmeida.med9.domain.enums.Role;
 

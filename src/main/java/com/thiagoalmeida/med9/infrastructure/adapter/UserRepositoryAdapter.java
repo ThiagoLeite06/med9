@@ -6,6 +6,7 @@ import com.thiagoalmeida.med9.infrastructure.mapper.UserMapper;
 import com.thiagoalmeida.med9.infrastructure.persistence.entities.UserJpaEntity;
 import com.thiagoalmeida.med9.infrastructure.persistence.repositories.UserJpaRepository;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -65,5 +66,10 @@ public class UserRepositoryAdapter implements UserRepository {
     @Override
     public boolean existsByEmail(String email) {
         return jpaRepository.existsByEmail(email);
+    }
+
+    @Override
+    public boolean existsById(Long id) {
+        return false;
     }
 }

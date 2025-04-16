@@ -1,5 +1,11 @@
 package com.thiagoalmeida.med9.presentation.controller;
 
+import com.thiagoalmeida.med9.application.dto.user.UserRequest;
+import com.thiagoalmeida.med9.application.dto.user.UserResponse;
+import com.thiagoalmeida.med9.domain.entity.User;
+import com.thiagoalmeida.med9.domain.usecase.user.*;
+import com.thiagoalmeida.med9.infrastructure.mapper.UserMapper;
+import com.thiagoalmeida.med9.infrastructure.persistence.entities.UserJpaEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,69 +17,62 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/users")
 public class UserController {
 
-    private final UserUseCase userUseCase;
+    private final CreateUserUseCase createUserUseCase;
+    private final GetUserByIdUseCase getUserByIdUseCase;
+    private final GetAllUsersUseCase getAllUsersUseCase;
+    private final UpdateUserUseCase updateUserUseCase;
+    private final DeleteUserUseCase deleteUserUseCase;
+    private final UserMapper userMapper;
 
-    public UserController(UserUseCase userUseCase) {
-        this.userUseCase = userUseCase;
+    public UserController(CreateUserUseCase createUserUseCase,
+                          GetUserByIdUseCase getUserByIdUseCase,
+                          GetAllUsersUseCase getAllUsersUseCase,
+                          UpdateUserUseCase updateUserUseCase,
+                          DeleteUserUseCase deleteUserUseCase,
+                          UserMapper userMapper) {
+        this.createUserUseCase = createUserUseCase;
+        this.getUserByIdUseCase = getUserByIdUseCase;
+        this.getAllUsersUseCase = getAllUsersUseCase;
+        this.updateUserUseCase = updateUserUseCase;
+        this.deleteUserUseCase = deleteUserUseCase;
+        this.userMapper = userMapper;
     }
 
     @PostMapping
     public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest request) {
-        User user = toUserDomain(request, null);
-        User created = userUseCase.createUser(user);
-        return new ResponseEntity<>(toUserResponse(created), HttpStatus.CREATED);
+        User userJpaEntity = userMapper.map(request, User.class);
+        User created = createUserUseCase.execute(userJpaEntity);
+        return new ResponseEntity<>(userMapper.toUserResponse(created), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getUserById(@PathVariable Long id) {
-        return userUseCase.getUserById(id)
-                .map(user -> ResponseEntity.ok(toUserResponse(user)))
+        return getUserByIdUseCase.execute(id)
+                .map(user -> ResponseEntity.ok(userMapper.toUserResponse(user)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping
     public ResponseEntity<List<UserResponse>> getAllUsers() {
-        List<UserResponse> users = userUseCase.getAllUsers().stream()
-                .map(this::toUserResponse)
+        List<User> users = getAllUsersUseCase.execute();
+        List<UserResponse> responses = users.stream()
+                .map(userMapper::toUserResponse)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(users);
+        return ResponseEntity.ok(responses);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> updateUser(
             @PathVariable Long id,
             @RequestBody UserRequest request) {
-        User user = toUserDomain(request, id);
-        User updated = userUseCase.updateUser(user);
-        return ResponseEntity.ok(toUserResponse(updated));
+        User userJpaEntity = userMapper.map(request, User.class);
+        User updated = updateUserUseCase.execute(userJpaEntity);
+        return ResponseEntity.ok(userMapper.toUserResponse(updated));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        userUseCase.deleteUser(id);
+        deleteUserUseCase.execute(id);
         return ResponseEntity.noContent().build();
-    }
-
-    private User toUserDomain(UserRequest request, Long id) {
-        return new User(
-                id,
-                request.username(),
-                request.name(),
-                request.email(),
-                request.password(),
-                request.role(),
-                request.address()
-        );
-    }
-
-    private UserResponse toUserResponse(User user) {
-        return new UserResponse(
-                user.id(),
-                user.username(),
-                user.name(),
-                user.email(),
-                user.role(),
-                user.address()
-        );
     }
 }

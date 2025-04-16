@@ -1,5 +1,6 @@
 package com.thiagoalmeida.med9.domain.repository;
 
+import com.thiagoalmeida.med9.application.dto.user.UserRequest;
 import com.thiagoalmeida.med9.domain.entity.User;
 import org.springframework.stereotype.Repository;
 
