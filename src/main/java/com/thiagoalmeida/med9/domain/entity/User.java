@@ -1,13 +1,13 @@
 package com.thiagoalmeida.med9.domain.entity;
 
-import java.util.Set;
+import com.thiagoalmeida.med9.domain.enums.Role;
 
 public record User(
         Long id,
         String username,
+        String password,
         String name,
         String email,
-        String password,
-        Set<String> roles,
+        Role role,
         String address
 ) { }
