@@ -8,13 +8,9 @@ CREATE TABLE IF NOT EXISTS users (
     role VARCHAR(50) NOT NULL
 );
 
--- Limpar dados existentes
-TRUNCATE TABLE users CASCADE;
-
 -- Inserir usuários de teste
--- Senha: 123456 (BCrypt hash)
 INSERT INTO users (username, password, name, email, role) VALUES
 ('admin', '$2a$10$KTZtP0xAa46ga9IwMWJ2ou5.udAp8T1HLrxsUuUo8HsLmY9lIoSwS', 'Administrador', 'admin@med9.com', 'ADMIN'),
 ('doctor', '$2a$10$KTZtP0xAa46ga9IwMWJ2ou5.udAp8T1HLrxsUuUo8HsLmY9lIoSwS', 'Dr. João Silva', 'doctor@med9.com', 'DOCTOR'),
 ('nurse', '$2a$10$KTZtP0xAa46ga9IwMWJ2ou5.udAp8T1HLrxsUuUo8HsLmY9lIoSwS', 'Enfermeira Maria', 'nurse@med9.com', 'NURSE'),
-('patient', '$2a$10$KTZtP0xAa46ga9IwMWJ2ou5.udAp8T1HLrxsUuUo8HsLmY9lIoSwS', 'Paciente José', 'patient@med9.com', 'PATIENT'); 
+('patient', '$2a$10$KTZtP0xAa46ga9IwMWJ2ou5.udAp8T1HLrxsUuUo8HsLmY9lIoSwS', 'Paciente José', 'patient@med9.com', 'PATIENT');
