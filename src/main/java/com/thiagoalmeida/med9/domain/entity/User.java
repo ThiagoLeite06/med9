@@ -1,7 +1,5 @@
 package com.thiagoalmeida.med9.domain.entity;
 
-import com.thiagoalmeida.med9.domain.enums.Role;
-
 import java.util.Set;
 
 public record User(
