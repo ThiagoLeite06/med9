@@ -4,6 +4,7 @@ import com.thiagoalmeida.med9.application.dto.doctor.DoctorRequest;
 import com.thiagoalmeida.med9.application.usecase.doctor.CreateDoctorUseCase;
 import com.thiagoalmeida.med9.application.usecase.doctor.GetDoctorUseCase;
 import com.thiagoalmeida.med9.domain.entity.Doctor;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,7 +19,7 @@ public class DoctorController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Doctor> createDoctor(@RequestBody DoctorRequest request) {
+    public ResponseEntity<Doctor> createDoctor(@RequestBody @Valid DoctorRequest request) {
         return ResponseEntity.ok(createDoctorUseCase.execute(request));
     }
 

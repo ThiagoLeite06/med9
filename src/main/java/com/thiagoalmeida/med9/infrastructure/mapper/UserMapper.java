@@ -1,15 +1,10 @@
 package com.thiagoalmeida.med9.infrastructure.mapper;
 
-import com.thiagoalmeida.med9.application.dto.user.UserRequest;
 import com.thiagoalmeida.med9.application.dto.user.UserResponse;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
-import org.springframework.stereotype.Component;
-
 import com.thiagoalmeida.med9.domain.entity.User;
-import com.thiagoalmeida.med9.domain.enums.Role;
-import com.thiagoalmeida.med9.infrastructure.persistence.entities.RoleJpaEntity;
 import com.thiagoalmeida.med9.infrastructure.persistence.entities.UserJpaEntity;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapper {
