@@ -48,8 +48,8 @@ class CreateDoctorUseCaseImplTest {
             "11999999999",
             "house@princeton.com",
             "house",
-            "password123",
-            "Princeton Hospital"
+            "password123"
+
         );
 
         doctor = new Doctor(
@@ -58,7 +58,8 @@ class CreateDoctorUseCaseImplTest {
             request.crm(),
             request.specialty(),
             request.phone(),
-            request.email()
+            request.email(),
+            1L
         );
 
         user = new User(
@@ -67,8 +68,7 @@ class CreateDoctorUseCaseImplTest {
             "encoded_password",
             request.name(),
             request.email(),
-            Role.DOCTOR,
-            request.address()
+            Role.DOCTOR
         );
     }
 

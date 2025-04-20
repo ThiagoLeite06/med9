@@ -40,8 +40,15 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest request) {
-        User userJpaEntity = userMapper.map(request, User.class);
-        User created = createUserUseCase.execute(userJpaEntity);
+        User user = new User(
+            null, // id será gerado pelo banco
+            request.username(),
+            request.password(),
+            request.name(),
+            request.email(),
+            request.role()
+        );
+        User created = createUserUseCase.execute(user);
         return new ResponseEntity<>(userMapper.toUserResponse(created), HttpStatus.CREATED);
     }
 
@@ -65,8 +72,15 @@ public class UserController {
     public ResponseEntity<UserResponse> updateUser(
             @PathVariable Long id,
             @RequestBody UserRequest request) {
-        User userJpaEntity = userMapper.map(request, User.class);
-        User updated = updateUserUseCase.execute(userJpaEntity);
+        User user = new User(
+            id,
+            request.username(),
+            request.password(),
+            request.name(),
+            request.email(),
+            request.role()
+        );
+        User updated = updateUserUseCase.execute(user);
         return ResponseEntity.ok(userMapper.toUserResponse(updated));
     }
 

@@ -37,7 +37,7 @@ public class CreatePatientUseCaseImpl implements CreatePatientUseCase {
             passwordEncoder.encode(request.password()),
             request.name(),
             request.email(),
-            Role.PATIENT, request.address()
+            Role.PATIENT
         );
         user = userRepository.save(user);
 
@@ -46,7 +46,8 @@ public class CreatePatientUseCaseImpl implements CreatePatientUseCase {
             request.name(),
             request.cpf(),
             request.phone(),
-            request.email()
+            request.email(),
+            user.id()
         );
         
         return patientRepository.save(patient);

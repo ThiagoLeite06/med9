@@ -37,8 +37,7 @@ public class CreateDoctorUseCaseImpl implements CreateDoctorUseCase {
             passwordEncoder.encode(request.password()),
             request.name(),
             request.email(),
-            Role.DOCTOR,
-            request.address()
+            Role.DOCTOR
         );
         user = userRepository.save(user);
 
@@ -48,7 +47,8 @@ public class CreateDoctorUseCaseImpl implements CreateDoctorUseCase {
             request.crm(),
             request.specialty(),
             request.phone(),
-            request.email()
+            request.email(),
+            user.id()
         );
         
         return doctorRepository.save(doctor);

@@ -22,16 +22,36 @@ public class UserMapper {
 
     public User toDomain(UserJpaEntity entity) {
         if (entity == null) return null;
-        return modelMapper.map(entity, User.class);
+        return new User(
+            entity.getId(),
+            entity.getUsername(),
+            entity.getPassword(),
+            entity.getName(),
+            entity.getEmail(),
+            entity.getRole()
+        );
     }
 
     public UserResponse toUserResponse(User user) {
         if (user == null) return null;
-        return modelMapper.map(user, UserResponse.class);
+        return new UserResponse(
+            user.id(),
+            user.username(),
+            user.name(),
+            user.email(),
+            user.role()
+        );
     }
 
     public UserJpaEntity toEntity(User domain) {
         if (domain == null) return null;
-        return modelMapper.map(domain, UserJpaEntity.class);
+        UserJpaEntity entity = new UserJpaEntity();
+        entity.setId(domain.id());
+        entity.setUsername(domain.username());
+        entity.setPassword(domain.password());
+        entity.setName(domain.name());
+        entity.setEmail(domain.email());
+        entity.setRole(domain.role());
+        return entity;
     }
 }

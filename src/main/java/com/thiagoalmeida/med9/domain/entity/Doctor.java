@@ -6,5 +6,6 @@ public record Doctor(
     String crm,
     String specialty,
     String phone,
-    String email
+    String email,
+    Long userId
 ) {}

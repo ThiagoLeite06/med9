@@ -8,6 +8,5 @@ public record User(
         String password,
         String name,
         String email,
-        Role role,
-        String address
+        Role role
 ) { }

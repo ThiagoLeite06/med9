@@ -47,8 +47,8 @@ class CreatePatientUseCaseImplTest {
             "11999999999",
             "john@example.com",
             "johndoe",
-            "password123",
-            "123 Main St"
+            "password123"
+
         );
 
         patient = new Patient(
@@ -56,7 +56,8 @@ class CreatePatientUseCaseImplTest {
             request.name(),
             request.cpf(),
             request.phone(),
-            request.email()
+            request.email(),
+            1L
         );
 
         user = new User(
@@ -65,8 +66,7 @@ class CreatePatientUseCaseImplTest {
             "encoded_password",
             request.name(),
             request.email(),
-            Role.PATIENT,
-            request.address()
+            Role.PATIENT
         );
     }
 

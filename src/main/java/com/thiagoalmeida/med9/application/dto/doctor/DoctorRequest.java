@@ -7,6 +7,5 @@ public record DoctorRequest(
     String phone,
     String email,
     String username,
-    String password,
-    String address
+    String password
 ) {}

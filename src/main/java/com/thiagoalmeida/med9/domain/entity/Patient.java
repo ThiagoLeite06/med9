@@ -5,5 +5,6 @@ public record Patient(
     String name,
     String cpf,
     String phone,
-    String email
+    String email,
+    Long userId
 ) {}
