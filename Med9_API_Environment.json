@@ -1,0 +1,21 @@
+{
+  "id": "e5a8d9c7-6b3f-4a2e-9d8c-7e6b3f5a2e9d",
+  "name": "Med9 API Environment",
+  "values": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2025-04-20T03:31:22.000Z",
+  "_postman_exported_using": "Postman/10.17.0"
+}
