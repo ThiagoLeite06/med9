@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS users (
 
 -- Inserir usuários de teste
 INSERT INTO users (username, password, name, email, role) VALUES
-('admin', '$2a$10$KTZtP0xAa46ga9IwMWJ2ou5.udAp8T1HLrxsUuUo8HsLmY9lIoSwS', 'Administrador', 'admin@med9.com', 'ADMIN'),
-('doctor', '$2a$10$KTZtP0xAa46ga9IwMWJ2ou5.udAp8T1HLrxsUuUo8HsLmY9lIoSwS', 'Dr. João Silva', 'doctor@med9.com', 'DOCTOR'),
-('nurse', '$2a$10$KTZtP0xAa46ga9IwMWJ2ou5.udAp8T1HLrxsUuUo8HsLmY9lIoSwS', 'Enfermeira Maria', 'nurse@med9.com', 'NURSE'),
-('patient', '$2a$10$KTZtP0xAa46ga9IwMWJ2ou5.udAp8T1HLrxsUuUo8HsLmY9lIoSwS', 'Paciente José', 'patient@med9.com', 'PATIENT');
+('admin', 'senha123', 'Administrador', 'admin@med9.com', 'ADMIN'),
+('doctor', 'senha123', 'Dr. João Silva', 'doctor@med9.com', 'DOCTOR'),
+('nurse', 'senha123', 'Enfermeira Maria', 'nurse@med9.com', 'NURSE'),
+('patient', 'senha123', 'Paciente José', 'patient@med9.com', 'PATIENT');

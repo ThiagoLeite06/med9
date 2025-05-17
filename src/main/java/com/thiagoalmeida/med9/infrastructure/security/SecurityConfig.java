@@ -12,7 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -39,6 +39,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/public/**").permitAll()
                 // Endpoints de administração
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                // Endpoints de usuários
+                .requestMatchers("/api/users/**").hasRole("ADMIN")
                 // Endpoints de médicos
                 .requestMatchers("/api/doctor/**").hasAnyRole("DOCTOR", "ADMIN")
                 // Endpoints de enfermeiros
@@ -46,8 +48,11 @@ public class SecurityConfig {
                 // Endpoints de pacientes
                 .requestMatchers("/api/patient/**").hasAnyRole("PATIENT", "ADMIN")
                 // Endpoints de consultas
+                .requestMatchers("/api/appointments").hasAnyRole("DOCTOR", "NURSE", "ADMIN")
+                .requestMatchers("/api/appointments/my").hasRole("PATIENT")
                 .requestMatchers("/api/appointments/**").hasAnyRole("DOCTOR", "NURSE", "ADMIN")
                 // Endpoints de histórico
+                .requestMatchers("/api/medical-history/my").hasRole("PATIENT")
                 .requestMatchers("/api/medical-history/**").hasAnyRole("DOCTOR", "NURSE", "ADMIN")
                 .anyRequest().authenticated()
             )
@@ -73,6 +78,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        // Usando NoOpPasswordEncoder temporariamente para testes
+        return NoOpPasswordEncoder.getInstance();
     }
-} 
+}
